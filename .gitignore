@@ -2,3 +2,4 @@
 .env
 .idea
 users.xml
+*.txt
