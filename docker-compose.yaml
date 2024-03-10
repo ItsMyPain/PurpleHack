@@ -8,7 +8,7 @@ networks:
 services:
 
   clickhouse-server:
-    image: yandex/clickhouse-server
+    image: clickhouse/clickhouse-server
     container_name: clickhouse-server
     ports:
       - '8123:8123'
