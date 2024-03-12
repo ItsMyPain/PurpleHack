@@ -16,7 +16,7 @@ class ClickHouse:
         CREATE TABLE document( 
             url String,
             embedding Array(Float32),
-            paragraph String,
+            paragraph Nullable(String),
             text String
         )
         ENGINE = MergeTree()
@@ -36,10 +36,13 @@ class ClickHouse:
 
 
 if __name__ == '__main__':
-    pass
-# ch = ClickHouse()
+    ch = ClickHouse()
+    import json
 
-# for i in data:
-#      print(i['paragraph'])
-
-# ch.insert(input_data)
+    ch.create_table()
+    f = open('data_txt.json')
+    data = json.load(f)
+    input_data = []
+    for i in data:
+      input_data.append([i['url'], i['embedding'], i['paragraph'], i['text']])
+    ch.insert(input_data)

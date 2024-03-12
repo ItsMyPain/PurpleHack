@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  embedding-server:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8889:8889'
+    command: python3 server.py
