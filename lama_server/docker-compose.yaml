@@ -1,5 +1,10 @@
 version: '3.7'
 
+networks:
+  default:
+    name: llama_net
+    external: true
+
 services:
   llama-server:
     env_file:

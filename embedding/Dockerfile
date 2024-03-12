@@ -11,5 +11,3 @@ RUN python3 -m pip install -r requirements.txt
 COPY . .
 
 EXPOSE 8889
-
-#CMD ["python3", "server.py"]
