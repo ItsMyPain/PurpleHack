@@ -46,7 +46,8 @@ def model():
     # output = model.generate(**inputs, do_sample=True, top_p=top_p, top_k=top_k, max_new_tokens=max_new_tokens)
     # output = tokenizer.decode(output[0], skip_special_tokens=True)
     output = 'test answer from model'
-    return jsonify(data=output)
+    return jsonify(system_message=system_message, top_p=top_p, top_k=top_k, max_new_tokens=max_new_tokens,
+                   user_prompt=user_prompt, data=output)
 
 
 if __name__ == '__main__':

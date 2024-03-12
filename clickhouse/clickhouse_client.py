@@ -1,7 +1,6 @@
 import os
 
 import clickhouse_connect
-import numpy as np
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -24,7 +23,7 @@ class ClickHouse:
         ORDER BY embedding;
         """)
 
-    def insert(self, data:list[list]):
+    def insert(self, data: list[list]):
         self.client.insert('document', data, column_names=['url', 'embedding', 'paragraph', 'text'])
 
     def select(self, data: list[float]):
@@ -37,15 +36,10 @@ class ClickHouse:
 
 
 if __name__ == '__main__':
-    ch = ClickHouse()
-    # ch.create_table()
+    pass
+# ch = ClickHouse()
 
-    # input_data = []
-    # input_emb = np.load('test.npy')
-    # for i in input_emb:
-    #     input_data.append(['test_url', i, 'test_paragraph', 'test_text'])
-    # ch.insert(input_data)
+# for i in data:
+#      print(i['paragraph'])
 
-    input_query = np.load('test_q.npy')[0].tolist()
-    output = ch.select(input_query)
-    print(output.result_rows)
+# ch.insert(input_data)

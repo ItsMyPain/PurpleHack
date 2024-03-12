@@ -2,17 +2,15 @@ version: '3.7'
 
 networks:
   default:
-    name: ch-net
+    name: clickhouse_net
     external: true
 
 services:
-
   clickhouse-server:
     image: clickhouse/clickhouse-server
     container_name: clickhouse-server
     ports:
       - '8123:8123'
-      - '9000:9000'
     volumes:
       - ./users.xml:/etc/clickhouse-server/users.xml
       - ./db:/var/lib/clickhouse

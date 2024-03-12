@@ -1,3 +1,8 @@
 import requests
 
-res = requests.post(json=)
+session = requests.Session()
+session.auth = ('doctor22', '287aaeb9-6173-4183-8b88-b8182b6908d1')
+
+auth = session.post('http://localhost:8888/model', json={'user_prompt': 'test'})
+print(auth)
+print(auth.text)
