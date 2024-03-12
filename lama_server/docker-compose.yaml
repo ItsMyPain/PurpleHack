@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  llama-server:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8888:8888'
+    command: python3 server.py

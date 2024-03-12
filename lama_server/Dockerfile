@@ -10,12 +10,13 @@ RUN apt-get update && \
         python3-opencv \
         libglib2.0-0
 
-COPY requirements.txt requirements.txt
 
-RUN python3 -m pip install -r requirements.txt
 RUN python3 -m pip install --upgrade pip
 RUN pip3 install torch torchvision torchaudio -f https://download.pytorch.org/whl/cu111/torch_stable.html
 
-WORKDIR /app
+COPY requirements.txt requirements.txt
+RUN python3 -m pip install -r requirements.txt
 
-ENTRYPOINT [ "python3" ]
+COPY . .
+
+EXPOSE 8888
