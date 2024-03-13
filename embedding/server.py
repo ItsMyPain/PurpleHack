@@ -16,8 +16,10 @@ def average_pool(last_hidden_states: Tensor,
     return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
 
 
+print('Loading model...')
 tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-base-v2')
 model = AutoModel.from_pretrained('intfloat/e5-base-v2')
+print('Loaded model')
 
 app = Flask(__name__)
 basic_auth = BasicAuth(app)
@@ -34,9 +36,15 @@ def embedding():
     input_text = data.get('input_text', False)
 
     if not input_text:
-        return jsonify('Need user_prompt key'), 400
+        return jsonify('Need input_text key'), 400
 
-    batch_dict = tokenizer(input_text, max_length=512, padding=True, truncation=True, return_tensors='pt')
+    max_length = data.get('max_length', 512)
+    if max_length == 'len':
+        max_length = len(input_text)
+    else:
+        max_length = int(max_length)
+
+    batch_dict = tokenizer(input_text, max_length=max_length, padding=True, truncation=True, return_tensors='pt')
     outputs = model(**batch_dict)
     embeddings = average_pool(outputs.last_hidden_state, batch_dict['attention_mask'])
     embeddings = F.normalize(embeddings, p=2, dim=1)
@@ -45,4 +53,7 @@ def embedding():
 
 
 if __name__ == '__main__':
+    import torch
+
+    print(torch.cuda.is_available())
     app.run(host=os.getenv('EMBEDDING_HOST'), port=os.getenv('EMBEDDING_PORT'))

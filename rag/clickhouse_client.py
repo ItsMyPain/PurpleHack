@@ -26,23 +26,18 @@ class ClickHouse:
     def insert(self, data: list[list]):
         self.client.insert('document', data, column_names=['url', 'embedding', 'paragraph', 'text'])
 
-    def select(self, data: list[float]):
+    def select_document(self, data: list[float]):
         return self.client.query("""
         SELECT url, paragraph, text, cosineDistance({data:Array(Float32)}, embedding) AS score 
-        FROM document 
-        ORDER BY score DESC 
-        LIMIT 10
+        FROM document
+        ORDER BY score ASC 
+        LIMIT 3
         """, parameters={'data': data})
 
-
-if __name__ == '__main__':
-    ch = ClickHouse()
-    import json
-
-    ch.create_table()
-    f = open('data_txt.json')
-    data = json.load(f)
-    input_data = []
-    for i in data:
-      input_data.append([i['url'], i['embedding'], i['paragraph'], i['text']])
-    ch.insert(input_data)
+    def select_question(self, data: list[float]):
+        return self.client.query("""
+        SELECT url, question, answer, cosineDistance({data:Array(Float32)}, embedding) AS score 
+        FROM question
+        ORDER BY score ASC 
+        LIMIT 3
+        """, parameters={'data': data})

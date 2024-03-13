@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  llama-server:
+    env_file:
+      - .env
+    build: .
+    container_name: llama-server
+    environment:
+      - PYTHONUNBUFFERED=True
+    restart: always
+    ports:
+      - '8888:8888'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    command: python3 ./server.py

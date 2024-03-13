@@ -1,17 +1,14 @@
 version: '3.7'
 
-networks:
-  default:
-    name: embedding_net
-    external: true
-
 services:
   embedding-server:
     env_file:
       - .env
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
+    container_name: embedding-server
+    environment:
+      - PYTHONUNBUFFERED=True
+    restart: always
     ports:
       - '8889:8889'
     command: python3 server.py
