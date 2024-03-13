@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  tg-bot:
+    env_file:
+      - .env
+    build: .
+    container_name: tg-bot
+    environment:
+      - PYTHONUNBUFFERED=True
+    restart: always
+    command: python3 bot.py

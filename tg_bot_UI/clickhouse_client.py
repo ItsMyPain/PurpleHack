@@ -36,9 +36,9 @@ class ClickHouse:
 
     def select_question(self, data: list[float]):
         return self.client.query("""
-        SELECT question, cosineDistance({data:Array(Float32)}, embedding) AS score 
+        SELECT question, answer, cosineDistance({data:Array(Float32)}, embedding) AS score 
         FROM question
-        WHERE score <= 0.055
+        WHERE score <= 0.07
         ORDER BY score ASC
         LIMIT 3
         """, parameters={'data': data})

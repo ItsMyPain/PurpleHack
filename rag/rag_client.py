@@ -11,21 +11,22 @@ if __name__ == '__main__':
     embeddings = Embedding()
     llama = Llama()
 
-    Question = """Кем назначается Уполномоченный представитель Банка России ?"""
+    # Question = """Кем назначается Уполномоченный представитель Банка России?"""
+    Question = """Как зовут председателя центрального банка российской федерации?"""
+    # Question = """Скачать обо клеш рояль"""
 
     res = embeddings.embedding_request(Question, 'len')
-
-    print(ch.select_question(res.get('data')).result_rows)
-
-    exit(0)
+    questions = ch.select_question(res.get('data')).result_rows
 
     user_prompt = f"""Paraphrase the following text in three different ways. Return the result in Russian. The answer should be in the format “1) ..., 2) ...,3) ...".
     
-    Text: {Question}"""
+    Text: {Question}
+    
+    Answer:"""
 
     auth = llama.llama_request(user_prompt)
 
-    ans = auth.get('data')
+    ans = auth.get('data')[auth.get('data').rfind('Answer:'):]
     Question_1 = ans[ans.rfind('1)'):ans.rfind('2)')]
     Question_2 = ans[ans.rfind('2)'):ans.rfind('3)')]
     Question_3 = ans[ans.rfind('3)'):]
@@ -34,20 +35,32 @@ if __name__ == '__main__':
     print(Question_2)
     print(Question_3)
     print("--------------------------")
+    links = []
     text_to_ans = []
 
-    text_to_ans.append(ch.select_document(res.get('data')).result_rows[0][2])
+    res = embeddings.embedding_request(Question, 'len')
+    data = ch.select_document(res.get('data')).result_rows[0]
+    text_to_ans.append(data[2])
+    links.append(data[0])
 
     res_1 = embeddings.embedding_request(Question_1, 'len')
-    text_to_ans.append(ch.select_document(res_1.get('data')).result_rows[0][2])
+    data_1 = ch.select_document(res_1.get('data')).result_rows[0]
+    text_to_ans.append(data_1[2])
+    links.append(data_1[0])
 
     res_2 = embeddings.embedding_request(Question_2, 'len')
-    text_to_ans.append(ch.select_document(res_2.get('data')).result_rows[0][2])
+    data_2 = ch.select_document(res_2.get('data')).result_rows[0]
+    text_to_ans.append(data_2[2])
+    links.append(data_2[0])
 
     res_3 = embeddings.embedding_request(Question_3, 'len')
-    text_to_ans.append(ch.select_document(res_3.get('data')).result_rows[0][2])
+    data_3 = ch.select_document(res_3.get('data')).result_rows[0]
+    text_to_ans.append(data[2])
+    links.append(data[0])
 
+    links = '\n'.join(links)
     text_to_ans = '\n'.join(text_to_ans)
+
     print(text_to_ans)
     print("--------------------------")
 
