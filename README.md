@@ -5,9 +5,14 @@
 
 
 Папки *clickhouse*, *embedding* и *llama* содержат в себе докер контейнеры серверов.
-1. *clickhouse* - разварачивает *СlickHouse*
-2. *embedding/server.py* генерируют эмэдинги с помощью модели *e5-base-v2*
+1. *clickhouse* - разворачивает *СlickHouse*
+2. *embedding/server.py* генерируют эмбэдинги с помощью модели *e5-base-v2*
 3. *embedding/server.py* Поднимает модель *llama2-13b-orca-8k-3319*
+
+Каждый из этих 3х микросервисов запускается следующими командами:
+1. `docker compose build`
+2. `docker compose up`
+
 
 
 Папка *rag* содержит в себе все этапы запроса от клиента:
