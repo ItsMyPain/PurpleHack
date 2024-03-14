@@ -30,3 +30,10 @@ RAM - 32 Gb
 SSD - 160 Gb
 
 Попробовать качество работы можно в telegram боте https://t.me/cbhack_bot
+
+## Авторы
+**Torch-ки**
+* Агибалов Сергей - https://github.com/ItsMyPain
+* Березин Даниил - https://github.com/BerezinDaniil
+* Бойков Максим - https://github.com/maxxxims
+
