@@ -1,5 +1,9 @@
 version: '3.7'
 
+volumes:
+  ubuntu_cache:
+    name: ubuntu_cache
+
 services:
   llama-server:
     env_file:
@@ -11,6 +15,8 @@ services:
     restart: always
     ports:
       - '8888:8888'
+    volumes:
+      - ubuntu_cache:/home/ubuntu/.cache
     deploy:
       resources:
         reservations:
