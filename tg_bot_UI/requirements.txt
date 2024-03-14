@@ -24,3 +24,4 @@ typing_extensions==4.9.0
 urllib3==2.2.0
 yarl==1.9.4
 clickhouse_connect~=0.7.2
+translate==3.6.1
